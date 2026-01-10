@@ -119,7 +119,7 @@ const deleteCurrencyController = async (req, res) => {
     const currencyExists = await pool.query(
       `
             SELECT 1 from subledger_cz.dim_currency
-            WHERE currency_id_sk_id_sk = $1
+            WHERE currency_id_sk = $1
         `,
       [currencyId]
     );
@@ -133,7 +133,7 @@ const deleteCurrencyController = async (req, res) => {
         DELETE FROM subledger_cz.dim_currency
         WHERE currency_id_sk = $1
       `,
-      [fundId]
+      [currencyId]
     );
 
     res.status(200).send("Currency successfully deleted");
