@@ -101,8 +101,51 @@ const updateCurrencyController = async (req, res) => {
   }
 };
 
+const deleteCurrencyController = async (req, res) => {
+  try {
+    // Request must include a body
+    if (req.body == undefined) {
+      return res.status(400).send("Must send body with this request");
+    }
+
+    const { currencyId } = req.body;
+
+    // Fund ID must be defined
+    if (currencyId == undefined) {
+      return res.status(400).send("Must enter a currency ID to make an update");
+    }
+
+    // Check to see if the deal exists, if not return an error
+    const currencyExists = await pool.query(
+      `
+            SELECT 1 from subledger_cz.dim_currency
+            WHERE currency_id_sk_id_sk = $1
+        `,
+      [currencyId]
+    );
+
+    if (currencyExists.rows.length === 0) {
+      return res.status(404).send("Currency not found");
+    }
+
+    await pool.query(
+      `
+        DELETE FROM subledger_cz.dim_currency
+        WHERE currency_id_sk = $1
+      `,
+      [fundId]
+    );
+
+    res.status(200).send("Currency successfully deleted");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Database error");
+  }
+};
+
 module.exports = {
   getCurrencyController,
   createCurrencyController,
   updateCurrencyController,
+  deleteCurrencyController,
 };

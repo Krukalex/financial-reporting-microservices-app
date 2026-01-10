@@ -97,8 +97,53 @@ const updateTransactionTypeController = async (req, res) => {
   }
 };
 
+const deleteTransactionTypeController = async (req, res) => {
+  try {
+    // Request must include a body
+    if (req.body == undefined) {
+      return res.status(400).send("Must send body with this request");
+    }
+
+    const { txTypeId } = req.body;
+
+    // Fund ID must be defined
+    if (txTypeId == undefined) {
+      return res
+        .status(400)
+        .send("Must enter a transaction type ID to make an update");
+    }
+
+    // Check to see if the deal exists, if not return an error
+    const txTypeExists = await pool.query(
+      `
+            SELECT 1 from subledger_cz.dim_transaction_type
+            WHERE tx_type_id_sk = $1
+        `,
+      [fundId]
+    );
+
+    if (txTypeExists.rows.length === 0) {
+      return res.status(404).send("Transaction type not found");
+    }
+
+    await pool.query(
+      `
+        DELETE FROM subledger_cz.dim_transaction_type
+        WHERE tx_type_id_sk = $1
+      `,
+      [txTypeId]
+    );
+
+    res.status(200).send("Transaction type successfully deleted");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Database error");
+  }
+};
+
 module.exports = {
   getTransactionTypeController,
   createTransactionTypeController,
   updateTransactionTypeController,
+  deleteTransactionTypeController,
 };

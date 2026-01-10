@@ -101,8 +101,51 @@ const updateDealController = async (req, res) => {
   }
 };
 
+const deleteDealController = async (req, res) => {
+  try {
+    // Request must include a body
+    if (req.body == undefined) {
+      return res.status(400).send("Must send body with this request");
+    }
+
+    const { dealId } = req.body;
+
+    // Fund ID must be defined
+    if (dealId == undefined) {
+      return res.status(400).send("Must enter a deal ID to make an update");
+    }
+
+    // Check to see if the deal exists, if not return an error
+    const dealExists = await pool.query(
+      `
+            SELECT 1 from subledger_cz.dim_deal
+            WHERE deal_id_sk = $1
+        `,
+      [dealId]
+    );
+
+    if (dealExists.rows.length === 0) {
+      return res.status(404).send("Deal not found");
+    }
+
+    await pool.query(
+      `
+        DELETE FROM subledger_cz.dim_deal
+        WHERE deal_id_sk = $1
+      `,
+      [fundId]
+    );
+
+    res.status(200).send("Deal successfully deleted");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Database error");
+  }
+};
+
 module.exports = {
   getDealController,
   createDealController,
   updateDealController,
+  deleteDealController,
 };
