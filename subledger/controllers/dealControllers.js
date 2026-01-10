@@ -43,7 +43,7 @@ const updateDealController = async (req, res) => {
 
     // Deal ID must be defined
     if (dealId == undefined) {
-      return res.status(400).send("Must enter a fund ID to make an update");
+      return res.status(400).send("Must enter a deal ID to make an update");
     }
 
     // Check to see if the deal exists, if not return an error
@@ -56,7 +56,7 @@ const updateDealController = async (req, res) => {
     );
 
     if (dealExists.rows.length === 0) {
-      return res.status(404).send("Fund not found");
+      return res.status(404).send("Deal not found");
     }
 
     // Build dynamic query based on provided fields
