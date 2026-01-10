@@ -7,6 +7,7 @@ const fundRoutes = require("./routes/fund");
 const dealRoutes = require("./routes/deal");
 const currencyRoutes = require("./routes/currency");
 const transTypeRoutes = require("./routes/transType");
+const transactionRoutes = require("./routes/transaction");
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/funds", fundRoutes);
 app.use("/deals", dealRoutes);
 app.use("/currency", currencyRoutes);
 app.use("/tx_type", transTypeRoutes);
+app.use("/transactions", transactionRoutes);
 
 app.listen(5000, (err) => {
   console.log("listening on port 5000");

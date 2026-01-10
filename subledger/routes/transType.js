@@ -8,12 +8,12 @@ const {
 
 const router = express.Router();
 
-router.get("/tx_type", getTransactionTypeController);
+router.get("/", getTransactionTypeController);
 
-router.post("/tx_type/create", createTransactionTypeController);
+router.post("/create", createTransactionTypeController);
 
-router.put("/tx_type/update", updateTransactionTypeController);
+router.put("/update", updateTransactionTypeController);
 
-router.delete("/tx_type/delete", deleteTransactionTypeController);
+router.delete("/delete", deleteTransactionTypeController);
 
 module.exports = router;

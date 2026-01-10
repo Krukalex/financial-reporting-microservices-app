@@ -116,8 +116,8 @@ const deleteTransactionTypeController = async (req, res) => {
     // Check to see if the deal exists, if not return an error
     const txTypeExists = await pool.query(
       `
-            SELECT 1 from subledger_cz.dim_transaction_type
-            WHERE tx_type_id_sk = $1
+        SELECT 1 from subledger_cz.dim_transaction_type
+        WHERE tx_type_id_sk = $1
         `,
       [txTypeId]
     );

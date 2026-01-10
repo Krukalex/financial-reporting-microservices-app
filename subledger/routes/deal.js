@@ -8,12 +8,12 @@ const {
 
 const router = express.Router();
 
-router.get("/deals", getDealController);
+router.get("/", getDealController);
 
-router.post("/deals/create", createDealController);
+router.post("/create", createDealController);
 
-router.put("/deals/update", updateDealController);
+router.put("/update", updateDealController);
 
-router.delete("/deals/delete", deleteDealController);
+router.delete("/delete", deleteDealController);
 
 module.exports = router;
