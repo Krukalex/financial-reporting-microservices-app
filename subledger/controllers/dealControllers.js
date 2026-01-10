@@ -1,12 +1,12 @@
 const pool = require("../data/db");
 
-const getFundController = async (req, res) => {
+const getDealController = async (req, res) => {
   try {
     const result = await pool.query(`
               select
                   *
               from 
-                  subledger_cz.dim_fund
+                  subledger_cz.dim_deal
               `);
     res.status(200).send(result);
   } catch (err) {
@@ -15,47 +15,47 @@ const getFundController = async (req, res) => {
   }
 };
 
-const createFundController = async (req, res) => {
+const createDealController = async (req, res) => {
   try {
-    const { fundName, createdDate } = req.body;
+    const { dealName, createdDate } = req.body;
     await pool.query(
       `
-      INSERT INTO subledger_cz.dim_fund (fund_name, fund_created_date)
+      INSERT INTO subledger_cz.dim_deal (deal_name, deal_created_date)
       VALUES ($1, $2)
     `,
-      [fundName, createdDate]
+      [dealName, createdDate]
     );
-    res.status(201).send(`${fundName} successfully created`);
+    res.status(201).send(`${dealName} successfully created`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Database error");
   }
 };
 
-const updateFundController = async (req, res) => {
+const updateDealController = async (req, res) => {
   try {
     // Request must include a body
     if (req.body == undefined) {
       return res.status(400).send("Must send body with this request");
     }
 
-    const { fundId, fundName, createdDate } = req.body;
+    const { dealId, dealName, createdDate } = req.body;
 
-    // Fund ID must be defined
-    if (fundId == undefined) {
+    // Deal ID must be defined
+    if (dealId == undefined) {
       return res.status(400).send("Must enter a fund ID to make an update");
     }
 
     // Check to see if the deal exists, if not return an error
-    const fundExists = await pool.query(
+    const dealExists = await pool.query(
       `
-            SELECT 1 from subledger_cz.dim_fund
-            WHERE fund_id_sk = $1
+            SELECT 1 from subledger_cz.dim_deal
+            WHERE deal_id_sk = $1
         `,
-      [fundId]
+      [dealId]
     );
 
-    if (fundExists.rows.length === 0) {
+    if (dealExists.rows.length === 0) {
       return res.status(404).send("Fund not found");
     }
 
@@ -64,14 +64,14 @@ const updateFundController = async (req, res) => {
     const values = [];
     let paramCount = 1;
 
-    if (fundName !== undefined) {
-      updateFields.push(`fund_name = $${paramCount}`);
-      values.push(fundName);
+    if (dealName !== undefined) {
+      updateFields.push(`deal_name = $${paramCount}`);
+      values.push(dealName);
       paramCount++;
     }
 
     if (createdDate !== undefined) {
-      updateFields.push(`fund_created_date = $${paramCount}`);
+      updateFields.push(`deal_created_date = $${paramCount}`);
       values.push(createdDate);
       paramCount++;
     }
@@ -80,21 +80,21 @@ const updateFundController = async (req, res) => {
     if (updateFields.length === 0) {
       return res
         .status(400)
-        .send("At least one field (fundName or createdDate) is required");
+        .send("At least one field (dealName or createdDate) is required");
     }
 
-    // Add fundId as the WHERE clause parameter
-    values.push(fundId);
+    // Add dealId as the WHERE clause parameter
+    values.push(dealId);
     const whereParam = `$${paramCount}`;
 
     const query = `
-      UPDATE subledger_cz.dim_fund
+      UPDATE subledger_cz.dim_deal
       SET ${updateFields.join(", ")}
-      WHERE fund_id_sk = ${whereParam}
+      WHERE deal_id_sk = ${whereParam}
     `;
 
     await pool.query(query, values);
-    res.status(200).send("Fund successfully updated");
+    res.status(200).send("Deal successfully updated");
   } catch (err) {
     console.log(err);
     res.status(500).send("Database error");
@@ -102,7 +102,7 @@ const updateFundController = async (req, res) => {
 };
 
 module.exports = {
-  getFundController,
-  createFundController,
-  updateFundController,
+  getDealController,
+  createDealController,
+  updateDealController,
 };
