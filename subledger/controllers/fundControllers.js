@@ -101,8 +101,51 @@ const updateFundController = async (req, res) => {
   }
 };
 
+const deleteFundController = async (req, res) => {
+  try {
+    // Request must include a body
+    if (req.body == undefined) {
+      return res.status(400).send("Must send body with this request");
+    }
+
+    const { fundId } = req.body;
+
+    // Fund ID must be defined
+    if (fundId == undefined) {
+      return res.status(400).send("Must enter a fund ID to make an update");
+    }
+
+    // Check to see if the deal exists, if not return an error
+    const fundExists = await pool.query(
+      `
+            SELECT 1 from subledger_cz.dim_fund
+            WHERE fund_id_sk = $1
+        `,
+      [fundId]
+    );
+
+    if (fundExists.rows.length === 0) {
+      return res.status(404).send("Fund not found");
+    }
+
+    await pool.query(
+      `
+        DELETE FROM subledger_cz.dim_fund
+        WHERE fund_id_sk = $1
+      `,
+      [fundId]
+    );
+
+    res.status(200).send("Fund successfully deleted");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Database error");
+  }
+};
+
 module.exports = {
   getFundController,
   createFundController,
   updateFundController,
+  deleteFundController,
 };
