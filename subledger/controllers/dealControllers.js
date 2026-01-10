@@ -133,7 +133,7 @@ const deleteDealController = async (req, res) => {
         DELETE FROM subledger_cz.dim_deal
         WHERE deal_id_sk = $1
       `,
-      [fundId]
+      [dealId]
     );
 
     res.status(200).send("Deal successfully deleted");
