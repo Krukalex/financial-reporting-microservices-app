@@ -8,12 +8,12 @@ const {
 
 const router = express.Router();
 
-router.get("/funds", getFundController);
+router.get("/", getFundController);
 
-router.post("/funds/create", createFundController);
+router.post("/create", createFundController);
 
-router.put("/funds/update", updateFundController);
+router.put("/update", updateFundController);
 
-router.delete("/funds/delete", deleteFundController);
+router.delete("/delete", deleteFundController);
 
 module.exports = router;

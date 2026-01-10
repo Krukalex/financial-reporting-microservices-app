@@ -8,12 +8,12 @@ const {
 
 const router = express.Router();
 
-router.get("/currency", getCurrencyController);
+router.get("/", getCurrencyController);
 
-router.post("/currency/create", createCurrencyController);
+router.post("/create", createCurrencyController);
 
-router.put("/currency/update", updateCurrencyController);
+router.put("/update", updateCurrencyController);
 
-router.delete("/currency/delete", deleteCurrencyController);
+router.delete("/delete", deleteCurrencyController);
 
 module.exports = router;
