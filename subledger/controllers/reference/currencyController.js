@@ -1,4 +1,4 @@
-const pool = require("../data/db");
+const pool = require("../../data/db");
 
 const getCurrencyController = async (req, res) => {
   try {

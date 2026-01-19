@@ -1,0 +1,56 @@
+src/
+├── app.js
+├── server.js
+│
+├── routes/
+│   ├── funds/
+│   │   ├── fund.routes.js              // CRUD only
+│   │   ├── fundCommitment.routes.js    // commitments
+│   │   ├── fundEvents.routes.js        // capital calls, distributions, etc.
+│   │   └── index.js                    // aggregates fund routes
+│   │
+│   ├── investors/
+│   │   ├── investor.routes.js -> NOT ADDED
+│   │   └── index.js -> NOT ADDED
+│   │
+│   ├── deals/
+│   │   ├── deal.routes.js
+│   │   └── index.js -> NOT ADDED
+│   │
+│   └── reference/
+│       ├── currency.routes.js
+│       └── transactionType.routes.js
+│
+├── controllers/
+│   ├── funds/
+│   │   ├── fund.controller.js
+│   │   ├── fundCommitment.controller.js -> NOT ADDED
+│   │   └── fundEvents.controller.js -> NOT ADDED
+│   │
+│   ├── investors/
+│   ├── deals/
+│   └── reference/
+│
+├── services/
+│   ├── funds/
+│   │   ├── capitalCall.service.js-> NOT ADDED 
+│   │   ├── distribution.service.js-> NOT ADDED
+│   │   ├── investment.service.js-> NOT ADDED
+│   │   └── fee.service.js-> NOT ADDED
+│   │
+│   ├── allocations/
+│   ├── transactions/
+│   └── commitments/
+│
+├── repositories/         // or data-access
+│   ├── fund.repo.js-> NOT ADDED
+│   ├── transaction.repo.js-> NOT ADDED
+│   ├── allocation.repo.js-> NOT ADDED
+│   └── commitment.repo.js-> NOT ADDED
+│
+├── middleware/
+│   ├── auth.js-> NOT ADDED
+│   ├── validateFundAccess.js-> NOT ADDED
+│   └── errorHandler.js-> NOT ADDED
+│
+└── utils/
