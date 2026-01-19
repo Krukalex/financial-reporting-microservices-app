@@ -1,13 +1,13 @@
-const pool = require("../data/db");
+const pool = require("../../data/db");
 
 const getFundController = async (req, res) => {
   try {
     const result = await pool.query(`
-              select
-                  *
-              from 
-                  subledger_cz.dim_fund
-              `);
+      select
+          *
+      from 
+          subledger_cz.dim_fund
+      `);
     res.status(200).send(result);
   } catch (err) {
     console.log(err);
@@ -39,14 +39,16 @@ const updateFundController = async (req, res) => {
       return res.status(400).send("Must send body with this request");
     }
 
-    const { fundId, fundName, createdDate } = req.body;
+    const { fundId } = req.params;
+
+    const { fundName, createdDate } = req.body;
 
     // Fund ID must be defined
     if (fundId == undefined) {
       return res.status(400).send("Must enter a fund ID to make an update");
     }
 
-    // Check to see if the deal exists, if not return an error
+    // Check to see if the fund exists, if not return an error
     const fundExists = await pool.query(
       `
             SELECT 1 from subledger_cz.dim_fund
@@ -103,12 +105,7 @@ const updateFundController = async (req, res) => {
 
 const deleteFundController = async (req, res) => {
   try {
-    // Request must include a body
-    if (req.body == undefined) {
-      return res.status(400).send("Must send body with this request");
-    }
-
-    const { fundId } = req.body;
+    const { fundId } = req.params;
 
     // Fund ID must be defined
     if (fundId == undefined) {

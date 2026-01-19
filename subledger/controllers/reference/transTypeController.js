@@ -1,4 +1,4 @@
-const pool = require("../data/db");
+const pool = require("../../data/db");
 
 const getTransactionTypeController = async (req, res) => {
   try {

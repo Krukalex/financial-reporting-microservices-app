@@ -4,16 +4,16 @@ const {
   createDealController,
   updateDealController,
   deleteDealController,
-} = require("../controllers/dealControllers");
+} = require("../../controllers/deals/dealControllers");
 
 const router = express.Router();
 
 router.get("/", getDealController);
 
-router.post("/create", createDealController);
+router.post("/", createDealController);
 
-router.put("/update", updateDealController);
+router.put("/:dealId", updateDealController);
 
-router.delete("/delete", deleteDealController);
+router.delete("/:dealId", deleteDealController);
 
 module.exports = router;

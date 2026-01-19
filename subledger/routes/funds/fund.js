@@ -4,16 +4,16 @@ const {
   createFundController,
   updateFundController,
   deleteFundController,
-} = require("../controllers/fundControllers");
+} = require("../../controllers/funds/fundControllers");
 
 const router = express.Router();
 
 router.get("/", getFundController);
 
-router.post("/create", createFundController);
+router.post("/", createFundController);
 
-router.put("/update", updateFundController);
+router.put("/:fundId", updateFundController);
 
-router.delete("/delete", deleteFundController);
+router.delete("/:fundId", deleteFundController);
 
 module.exports = router;

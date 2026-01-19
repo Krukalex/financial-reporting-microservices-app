@@ -3,10 +3,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const adminRoutes = require("./routes/admin");
-const fundRoutes = require("./routes/fund");
-const dealRoutes = require("./routes/deal");
-const currencyRoutes = require("./routes/currency");
-const transTypeRoutes = require("./routes/transType");
+const fundRoutes = require("./routes/funds/index");
+const dealRoutes = require("./routes/deals/deal");
+const investorRoutes = require("./routes/investors/investor");
+const currencyRoutes = require("./routes/reference/currency");
+const transTypeRoutes = require("./routes/reference/transType");
 const transactionRoutes = require("./routes/transaction");
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use("/admin", adminRoutes);
 app.use("/funds", fundRoutes);
 app.use("/deals", dealRoutes);
+app.use("/investors", investorRoutes);
 app.use("/currency", currencyRoutes);
 app.use("/tx_type", transTypeRoutes);
 app.use("/transactions", transactionRoutes);

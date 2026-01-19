@@ -4,7 +4,7 @@ const {
   createCurrencyController,
   updateCurrencyController,
   deleteCurrencyController,
-} = require("../controllers/currencyController");
+} = require("../../controllers/reference/currencyController");
 
 const router = express.Router();
 

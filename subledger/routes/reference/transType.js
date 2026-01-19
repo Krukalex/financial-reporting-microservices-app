@@ -4,7 +4,7 @@ const {
   createTransactionTypeController,
   updateTransactionTypeController,
   deleteTransactionTypeController,
-} = require("../controllers//transTypeController");
+} = require("../../controllers/reference/transTypeController");
 
 const router = express.Router();
 

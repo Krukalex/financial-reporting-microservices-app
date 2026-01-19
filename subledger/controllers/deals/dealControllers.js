@@ -1,4 +1,4 @@
-const pool = require("../data/db");
+const pool = require("../../data/db");
 
 const getDealController = async (req, res) => {
   try {
@@ -39,7 +39,9 @@ const updateDealController = async (req, res) => {
       return res.status(400).send("Must send body with this request");
     }
 
-    const { dealId, dealName, createdDate } = req.body;
+    const { dealId } = req.params;
+
+    const { dealName, createdDate } = req.body;
 
     // Deal ID must be defined
     if (dealId == undefined) {
@@ -103,12 +105,7 @@ const updateDealController = async (req, res) => {
 
 const deleteDealController = async (req, res) => {
   try {
-    // Request must include a body
-    if (req.body == undefined) {
-      return res.status(400).send("Must send body with this request");
-    }
-
-    const { dealId } = req.body;
+    const { dealId } = req.params;
 
     // Fund ID must be defined
     if (dealId == undefined) {
